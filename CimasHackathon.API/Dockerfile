@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["CimasHackathon.API/CimasHackathon.API.csproj", "Cimas Hackathon API/"]
+COPY ["CimasHackathon.API/CimasHackathon.API.csproj", "CimasHackathon.API/"]
 RUN dotnet restore "CimasHackathon.API/CimasHackathon.API.csproj"
 COPY . .
 WORKDIR "/src/CimasHackathon.API"
