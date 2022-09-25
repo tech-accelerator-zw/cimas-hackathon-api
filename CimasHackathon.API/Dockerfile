@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Cimas Hackathon API/CimasHackathon.API.csproj", "Cimas Hackathon API/"]
-RUN dotnet restore "Cimas Hackathon API/CimasHackathon.API.csproj"
+COPY ["CimasHackathon.API/CimasHackathon.API.csproj", "Cimas Hackathon API/"]
+RUN dotnet restore "CimasHackathon.API/CimasHackathon.API.csproj"
 COPY . .
-WORKDIR "/src/Cimas Hackathon API"
+WORKDIR "/src/CimasHackathon.API"
 RUN dotnet build "CimasHackathon.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
