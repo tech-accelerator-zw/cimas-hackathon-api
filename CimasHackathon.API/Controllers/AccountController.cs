@@ -30,14 +30,17 @@ namespace CimasHackathon.API.Controllers
         }
 
         [HttpPost("otp")]
-        public async Task<IActionResult> Otp(string phoneNumber)
+        public async Task<IActionResult> Otp(string cimasNumber)
         {
-            var result = await _accountRepository.PatientOtpAsync(phoneNumber);
+            var result = await _accountRepository.PatientOtpAsync(cimasNumber);
 
             if (!result.Success)
                 return BadRequest(result);
 
             return Ok(result);
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Get() => Ok(await _unitOfWork.)
     }
 }
