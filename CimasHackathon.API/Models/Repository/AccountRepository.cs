@@ -244,9 +244,9 @@ namespace CimasHackathon.API.Models.Repository
             return new Result<Patient>(patient);
         }
 
-        public async Task<Result<string>> PatientOtpAsync(string phoneNumber)
+        public async Task<Result<string>> PatientOtpAsync(string cimasNumber)
         {
-            var patient = await _context.Patients!.Include(x => x.Account).Where(tsuro => tsuro.Account!.PhoneNumber == phoneNumber).FirstOrDefaultAsync();
+            var patient = await _context.Patients!.Include(x => x.Account).Where(tsuro => tsuro.Account!.CimasNumber == cimasNumber).FirstOrDefaultAsync();
             if (patient == null) return new Result<string>(false, "User account not found!");
 
             var verificationCode = await _codeGeneratorService.GenerateVerificationCode();
