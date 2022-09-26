@@ -13,18 +13,19 @@ namespace CimasHackathon.API.Models.Repository
 
         public async Task<Result<bool>> AddPrescriptionAsync(PrescriptionRequest request)
         {
-            request.MedicationIds!.ForEach(async medicationId =>
+           request.MedicationIds!.ForEach(async medicationId =>
             {
                 await _dbSet.AddAsync(new Prescription
                 {
                     PatientId = request.PatientId,
                     MedicationId = medicationId,
+                    DoctorId = request.DoctorId,
                     Description = request.Description,
                     Status = request.Status
                 });
             });
             
-            return new Result<bool>(true);
+            return await Task.FromResult(new Result<bool>(true));
         }
 
         public async Task<Result<IEnumerable<Prescription>>> GetByCimasNumberAsync(string cimasNumber)
@@ -32,6 +33,7 @@ namespace CimasHackathon.API.Models.Repository
             var result = await _dbSet
                 .Include(p => p.Patient)
                 .Include(p => p.Medication)
+                .Include(p => p.IssuedBy)
                 .Where(p => p.Patient!.Account!.CimasNumber == cimasNumber)
                 .ToListAsync();
 
@@ -44,6 +46,7 @@ namespace CimasHackathon.API.Models.Repository
                 .Where(x => x.PatientId == patientId)
                 .Include(x => x.Patient)
                 .Include(x => x.Medication)
+                .Include(x => x.IssuedBy)
                 .ToListAsync();
 
             return new Result<IEnumerable<Prescription>>(prescriptions);

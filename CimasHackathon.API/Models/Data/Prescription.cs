@@ -7,10 +7,12 @@ namespace CimasHackathon.API.Models.Data
         public int Id { get; set; }
         public int PatientId { get; set; }
         public int MedicationId { get; set; }
+        public int DoctorId { get; set; }
         public string? Description { get; set; }
         public PrescriptionStatus Status { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public Medication? Medication { get; set; }
         public Patient? Patient { get; set; }
+        public Doctor? IssuedBy { get; set; }
     }
 }
