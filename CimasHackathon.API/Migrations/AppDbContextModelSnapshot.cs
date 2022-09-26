@@ -63,6 +63,28 @@ namespace CimasHackathon.API.Migrations
                     b.ToTable("Diseases");
                 });
 
+            modelBuilder.Entity("CimasHackathon.API.Models.Data.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Doctors");
+                });
+
             modelBuilder.Entity("CimasHackathon.API.Models.Data.GeneratedCode", b =>
                 {
                     b.Property<int>("Id")
