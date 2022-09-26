@@ -20,7 +20,10 @@ namespace CimasHackathon.API.Models.Repository
 
         public async Task<Result<IEnumerable<Medication>>> SearchByNameAsync(string name)
         {
-            var medications = await _dbSet.Where(x => x.Name!.Contains(name)).ToListAsync();
+            var medications = await _dbSet
+                .Where(x => x.Name!.Contains(name))
+                .Include(x => x.Disease)
+                .ToListAsync();
 
             return new Result<IEnumerable<Medication>>(medications);
         }
