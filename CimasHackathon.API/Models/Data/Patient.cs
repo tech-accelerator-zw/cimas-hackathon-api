@@ -3,7 +3,7 @@
     public class Patient
     {
         public int Id { get; set; }
-        public string? AccountId { get; set; }
+        public int AccountId { get; set; }
         public string? Name { get; set; }
         public string? Surname { get; set; }
         public string? Address { get; set; }
