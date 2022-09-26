@@ -262,7 +262,7 @@ namespace CimasHackathon.API.Models.Repository
 
             var emailResult = await _emailService.SendEmailAsync(new EmailRequest
             {
-                Body = string.Format(_configuration["EmailService:OtpBody"], verificationCode),
+                Body = string.Format(_configuration["EmailService:OtpBody"], patient.Name, verificationCode),
                 Subject = _configuration["EmailService:OtpSubject"],
                 To = patient.Account.Email
             });
