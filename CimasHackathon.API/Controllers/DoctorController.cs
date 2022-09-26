@@ -1,4 +1,6 @@
-﻿using CimasHackathon.API.Models.Repository.IRepository;
+﻿using CimasHackathon.API.Models.Data;
+using CimasHackathon.API.Models.Local;
+using CimasHackathon.API.Models.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CimasHackathon.API.Controllers
@@ -20,6 +22,23 @@ namespace CimasHackathon.API.Controllers
             var result = await _unitOfWork.Doctor.FindAsync(id);
             if (!result.Success) return NotFound(result);
 
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post(DoctorRequest request)
+        {
+            var result = await _unitOfWork.Doctor.AddAsync(new Doctor
+            {
+                Location = request.Location,
+                Name = request.Name,
+                Surname = request.Surname
+            });
+
+            if (!result.Success) return BadRequest(result);
+
+            _unitOfWork.SaveChanges();
+            
             return Ok(result);
         }
     }
