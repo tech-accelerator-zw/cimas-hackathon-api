@@ -233,7 +233,11 @@ namespace CimasHackathon.API.Models.Repository
 
         public async Task<Result<Patient>> PatientLoginAsync(PatientLoginRequest request)
         {
-            var patient = await _context.Patients!.Where(tsuro => tsuro.Account!.Email == request.Email).FirstOrDefaultAsync();
+            var patient = await _context.Patients!
+                .Where(tsuro => tsuro.Account!.Email == request.Email)
+                .Include(x => x.Account)
+                .FirstOrDefaultAsync();
+            
             if (patient == null) return new Result<Patient>(false, "User account not found!");
 
             var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.Otp).FirstOrDefaultAsync();
