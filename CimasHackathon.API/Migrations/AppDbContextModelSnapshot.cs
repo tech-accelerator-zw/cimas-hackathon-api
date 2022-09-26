@@ -47,6 +47,22 @@ namespace CimasHackathon.API.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("CimasHackathon.API.Models.Data.Disease", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Diseases");
+                });
+
             modelBuilder.Entity("CimasHackathon.API.Models.Data.GeneratedCode", b =>
                 {
                     b.Property<int>("Id")
@@ -80,10 +96,15 @@ namespace CimasHackathon.API.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DiseaseId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DiseaseId");
 
                     b.ToTable("Medications");
                 });
@@ -119,6 +140,17 @@ namespace CimasHackathon.API.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("CimasHackathon.API.Models.Data.Medication", b =>
+                {
+                    b.HasOne("CimasHackathon.API.Models.Data.Disease", "Disease")
+                        .WithMany()
+                        .HasForeignKey("DiseaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Disease");
                 });
 
             modelBuilder.Entity("CimasHackathon.API.Models.Data.Patient", b =>
