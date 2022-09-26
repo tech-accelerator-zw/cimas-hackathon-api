@@ -6,5 +6,6 @@ namespace CimasHackathon.API.Models.Repository.IRepository
     public interface IPrescriptionRepository : IRepository<Prescription>
     {
         Task<Result<IEnumerable<Prescription>>> GetByPatientIdAsync(int patientId);
+        Task<Result<IEnumerable<Prescription>>> GetByCimasNumberAsync(string cimasNumber);
     }
 }
