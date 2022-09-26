@@ -1,4 +1,5 @@
-﻿using CimasHackathon.API.Models.Data;
+﻿using CimasHackathon.API.Enums;
+using CimasHackathon.API.Models.Data;
 using CimasHackathon.API.Models.Local;
 using CimasHackathon.API.Models.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -13,18 +14,18 @@ namespace CimasHackathon.API.Models.Repository
 
         public async Task<Result<bool>> AddPrescriptionAsync(PrescriptionRequest request)
         {
-           request.MedicationIds!.ForEach(async medicationId =>
-            {
-                await _dbSet.AddAsync(new Prescription
-                {
-                    PatientId = request.PatientId,
-                    MedicationId = medicationId,
-                    DoctorId = request.DoctorId,
-                    Description = request.Description,
-                    Status = request.Status
-                });
-            });
-            
+            request.MedicationIds!.ForEach(async medicationId =>
+             {
+                 await _dbSet.AddAsync(new Prescription
+                 {
+                     PatientId = request.PatientId,
+                     MedicationId = medicationId,
+                     DoctorId = request.DoctorId,
+                     Description = request.Description,
+                     Status = request.Status
+                 });
+             });
+
             return await Task.FromResult(new Result<bool>(true));
         }
 
@@ -62,6 +63,18 @@ namespace CimasHackathon.API.Models.Repository
                 .ToListAsync();
 
             return new Result<IEnumerable<Prescription>>(prescriptions);
+        }
+
+        public async Task<Result<IEnumerable<Prescription>>> GetByStatusAsync(PrescriptionStatus status)
+        {
+            var result = await _dbSet
+                .Include(p => p.Patient)
+                .Include(p => p.Medication)
+                .Include(p => p.IssuedBy)
+                .Where(p => p.Status == status)
+                .ToListAsync();
+
+            return new Result<IEnumerable<Prescription>>(result);
         }
     }
 }
