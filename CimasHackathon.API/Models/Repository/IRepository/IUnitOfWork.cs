@@ -2,6 +2,7 @@
 {
     public interface IUnitOfWork
     {
+        IAccountRepository Account { get; }
         void SaveChanges();
     }
 }
