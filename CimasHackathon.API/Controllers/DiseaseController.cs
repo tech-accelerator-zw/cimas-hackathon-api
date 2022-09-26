@@ -21,7 +21,6 @@ namespace CimasHackathon.API.Controllers
         {
             var result = await _unitOfWork.Disease.AddAsync(new Disease
             {
-                MedicationId = request.MedicationId,
                 Name = request.Name
             });
 
@@ -38,16 +37,6 @@ namespace CimasHackathon.API.Controllers
         {
             var result = await _unitOfWork.Disease.FindAsync(id);
 
-            if (!result.Success) return NotFound(result);
-
-            return Ok(result);
-        }
-
-        [HttpGet("medication/{medicationId}")]
-        public async Task<IActionResult> GetByMedicationId(int medicationId)
-        {
-            var result = await _unitOfWork.Disease.GetByMedicationIdAsync(medicationId);
-            
             if (!result.Success) return NotFound(result);
 
             return Ok(result);
