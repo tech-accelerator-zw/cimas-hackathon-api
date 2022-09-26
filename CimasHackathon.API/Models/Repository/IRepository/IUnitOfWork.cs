@@ -6,6 +6,7 @@
         IMedicationRepository Medication { get; }
         IDiseaseRepository Disease { get; }
         IDoctorRepository Doctor { get; }
+        IPrescriptionRepository Prescription { get; }
         void SaveChanges();
     }
 }
