@@ -10,7 +10,7 @@ namespace CimasHackathon.API.Models.Repository.IRepository
         Task<Result<IEnumerable<Account>>> GetAllAsync();
         Task<Result<Account>> UpdateAsync(Account account);
         Task<Result<bool>> DeleteAsync(Account account);
-        //Task<Result<Account>> LoginAsync(LoginRequest login);
+        Task<Result<Patient>> PatientLoginAsync(PatientLoginRequest login);
         //Task<Result<Account>> ChangePasswordAsync(ChangePasswordRequest changePassword);
         //Task<Result<string>> GetResetPasswordCodeAsync(string email);
         //Task<Result<Account>> ResetPasswordAsync(ResetPasswordRequest resetPassword);
