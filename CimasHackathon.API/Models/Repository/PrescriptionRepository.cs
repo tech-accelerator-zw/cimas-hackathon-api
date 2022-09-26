@@ -40,6 +40,18 @@ namespace CimasHackathon.API.Models.Repository
             return new Result<IEnumerable<Prescription>>(result);
         }
 
+        public async Task<Result<IEnumerable<Prescription>>> GetByDoctorIdAsync(int doctorId)
+        {
+            var result = await _dbSet
+                .Include(p => p.Patient)
+                .Include(p => p.Medication)
+                .Include(p => p.IssuedBy)
+                .Where(p => p.DoctorId == doctorId)
+                .ToListAsync();
+
+            return new Result<IEnumerable<Prescription>>(result);
+        }
+
         public async Task<Result<IEnumerable<Prescription>>> GetByPatientIdAsync(int patientId)
         {
             var prescriptions = await _dbSet
