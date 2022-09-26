@@ -14,5 +14,6 @@ namespace CimasHackathon.API.Models.Data
         public DbSet<Patient>? Patients { get; set; }
         public DbSet<Medication>? Medications { get; set; }
         public DbSet<Disease>? Diseases { get; set; }
+        public DbSet<Doctor>? Doctors { get; set; }
     }
 }
