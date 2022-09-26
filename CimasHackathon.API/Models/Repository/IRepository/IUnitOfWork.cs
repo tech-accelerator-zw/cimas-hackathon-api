@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        IAccountRepository Account { get; }
+        IPatientRepository Patient { get; }
         void SaveChanges();
     }
 }
