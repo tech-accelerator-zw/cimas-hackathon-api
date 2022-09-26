@@ -1,4 +1,6 @@
-﻿using CimasHackathon.API.Models.Repository.IRepository;
+﻿using CimasHackathon.API.Models.Data;
+using CimasHackathon.API.Models.Local;
+using CimasHackathon.API.Models.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CimasHackathon.API.Controllers
@@ -31,5 +33,14 @@ namespace CimasHackathon.API.Controllers
 
         [HttpGet("membership/{cimasNumber}")]
         public async Task<IActionResult> GetByPatient(string cimasNumber) => Ok(await _unitOfWork.Prescription.GetByCimasNumberAsync(cimasNumber));
+
+        [HttpPost]
+        public async Task<IActionResult> Post(PrescriptionRequest request)
+        {
+            var result = await _unitOfWork.Prescription.AddPrescriptionAsync(request);
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
     }
 }
