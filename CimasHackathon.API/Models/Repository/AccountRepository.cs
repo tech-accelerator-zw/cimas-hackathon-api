@@ -243,5 +243,33 @@ namespace CimasHackathon.API.Models.Repository
 
             return new Result<Patient>(patient);
         }
+
+        public async Task<Result<string>> PatientOtpAsync(string phoneNumber)
+        {
+            var patient = await _context.Patients!.Include(x => x.Account).Where(tsuro => tsuro.Account!.PhoneNumber == phoneNumber).FirstOrDefaultAsync();
+            if (patient == null) return new Result<string>(false, "User account not found!");
+
+            var verificationCode = await _codeGeneratorService.GenerateVerificationCode();
+
+            await _context.GeneratedCodes!.AddAsync(new GeneratedCode
+            {
+                Code = verificationCode,
+                UserEmail = patient.Account!.Email,
+                DateCreated = DateTime.Now
+            });
+
+            await _context.SaveChangesAsync();
+
+            var emailResult = await _emailService.SendEmailAsync(new EmailRequest
+            {
+                Body = string.Format(_configuration["EmailService:OtpBody"], verificationCode),
+                Subject = _configuration["EmailService:OtpSubject"],
+                To = patient.Account.Email
+            });
+
+            if (!emailResult.Success) return emailResult;
+
+            return new Result<string>("Verification code has been sent to your email.");
+        }
     }
 }
