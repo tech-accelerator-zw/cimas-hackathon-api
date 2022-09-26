@@ -11,6 +11,22 @@ namespace CimasHackathon.API.Models.Repository
         {
         }
 
+        public async Task<Result<bool>> AddPrescriptionAsync(PrescriptionRequest request)
+        {
+            request.MedicationIds!.ForEach(async medicationId =>
+            {
+                await _dbSet.AddAsync(new Prescription
+                {
+                    PatientId = request.PatientId,
+                    MedicationId = medicationId,
+                    Description = request.Description,
+                    Status = request.Status
+                });
+            });
+            
+            return new Result<bool>(true);
+        }
+
         public async Task<Result<IEnumerable<Prescription>>> GetByCimasNumberAsync(string cimasNumber)
         {
             var result = await _dbSet
