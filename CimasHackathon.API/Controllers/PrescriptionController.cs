@@ -25,5 +25,8 @@ namespace CimasHackathon.API.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("patient/{patientId}")]
+        public async Task<IActionResult> GetByPatient(int patientId) => Ok(await _unitOfWork.Prescription.GetByPatientIdAsync(patientId));
     }
 }
