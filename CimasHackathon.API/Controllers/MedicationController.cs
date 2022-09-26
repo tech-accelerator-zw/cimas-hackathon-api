@@ -34,7 +34,8 @@ namespace CimasHackathon.API.Controllers
             var result = await _unitOfWork.Medication.AddAsync(new Medication
             {
                 Description = request.Description,
-                Name = request.Name
+                Name = request.Name,
+                DiseaseId = request.DiseaseId
             });
 
             if (!result.Success) return BadRequest(result);
