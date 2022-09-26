@@ -4,6 +4,7 @@
     {
         IPatientRepository Patient { get; }
         IMedicationRepository Medication { get; }
+        IDiseaseRepository Disease { get; }
         void SaveChanges();
     }
 }
