@@ -6,7 +6,7 @@ namespace CimasHackathon.API.Models.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        //public IRoleRepository Role { get; private set; }
+        public IAccountRepository Account { get; private set; }
         //public IServiceProviderRepository ServiceProvider { get; private set; }
         //public ICategoryRepository Category { get; private set; }
 
@@ -15,7 +15,7 @@ namespace CimasHackathon.API.Models.Repository
 
         public UnitOfWork(AppDbContext context)
         {
-            //Role = new RoleRepository(context);
+            //Account = new AccountRepository(context);
             //ServiceProvider = new ServiceProviderRepository(context);
             //Category = new CategoryRepository(context);
             //Location = new LocationRepository(context);
