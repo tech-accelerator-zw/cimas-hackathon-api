@@ -3,6 +3,7 @@
     public interface IUnitOfWork
     {
         IPatientRepository Patient { get; }
+        IMedicationRepository Medication { get; }
         void SaveChanges();
     }
 }
