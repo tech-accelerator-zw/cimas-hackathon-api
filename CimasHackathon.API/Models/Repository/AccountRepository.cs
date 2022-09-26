@@ -36,7 +36,7 @@ namespace CimasHackathon.API.Models.Repository
                 account.Password = _passwordService.HashPassword(account.Password!);
 
                 await _context.Accounts!.AddAsync(account);
-                
+
                 var code = await _codeGeneratorService.GenerateVerificationCode();
 
                 await _context.GeneratedCodes!.AddAsync(new GeneratedCode
@@ -206,7 +206,7 @@ namespace CimasHackathon.API.Models.Repository
         //{
         //    var account = await _context.Accounts!.Where(x => x.Email == resetPassword.UserEmail).FirstOrDefaultAsync();
         //    if (account == null) return new Result<Account>(false, "Whoaa! How did you get here?");
-            
+
         //    var verifyCode = await _context.GeneratedCodes!
         //        .Where(x => x.UserEmail == account.Email &&
         //        x.DateCreated.AddMinutes(5) >= DateTime.Now &&
@@ -229,6 +229,19 @@ namespace CimasHackathon.API.Models.Repository
             if (account == null) return new Result<Account>(false, "Account not found.");
 
             return new Result<Account>(account);
+        }
+
+        public async Task<Result<Patient>> PatientLoginAsync(PatientLoginRequest request)
+        {
+            var patient = await _context.Patients!.Where(tsuro => tsuro.Account!.Email == request.Email).FirstOrDefaultAsync();
+            if (patient == null) return new Result<Patient>(false, "User account not found!");
+
+            var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.Otp).FirstOrDefaultAsync();
+            if (code == null) return new Result<Patient>(false, "Invalid code provided!");
+
+            patient.Account!.Token = await _jwtService.GenerateToken(patient.Account);
+
+            return new Result<Patient>(patient);
         }
     }
 }
