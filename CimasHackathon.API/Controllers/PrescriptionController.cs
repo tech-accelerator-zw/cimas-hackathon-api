@@ -47,6 +47,7 @@ namespace CimasHackathon.API.Controllers
             var result = await _unitOfWork.Prescription.AddPrescriptionAsync(request);
             if (!result.Success) return BadRequest(result);
 
+            _unitOfWork.SaveChanges();
             return Ok(result);
         }
     }
