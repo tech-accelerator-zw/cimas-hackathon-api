@@ -6,20 +6,11 @@ namespace CimasHackathon.API.Models.Repository
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        public IAccountRepository Account { get; private set; }
-        //public IServiceProviderRepository ServiceProvider { get; private set; }
-        //public ICategoryRepository Category { get; private set; }
-
-        //public ILocationRepository Location { get; private set; }
-        //public IQuotationRepository Quotation { get; private set; }
-
+        public IPatientRepository Patient { get; private set; }
+        
         public UnitOfWork(AppDbContext context)
         {
-            //Account = new AccountRepository(context);
-            //ServiceProvider = new ServiceProviderRepository(context);
-            //Category = new CategoryRepository(context);
-            //Location = new LocationRepository(context);
-            //Quotation = new QuotationRepository(context);
+            Patient = new PatientRepository(context);
             _context = context;
         }
 
