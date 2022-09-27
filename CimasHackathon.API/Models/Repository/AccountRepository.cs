@@ -275,5 +275,22 @@ namespace CimasHackathon.API.Models.Repository
 
             return new Result<string>("Verification code has been sent to your email.");
         }
+
+        public async Task<Result<Doctor>> DoctorLoginAsync(DoctorLoginRequest login)
+        {
+            var doctor = await _context.Doctors!.Where(x => x.Email == login.Email).FirstOrDefaultAsync();
+            if (doctor != null && login.Password == "qwerty123")
+            {
+                doctor.Token = await _jwtService.GenerateToken(new Account
+                {
+                    Id = doctor.Id,
+                    Email = doctor.Email
+                });
+
+                return new Result<Doctor>(doctor);
+            }
+
+            return new Result<Doctor>(false, "Invalid email or password provided.");
+        }
     }
 }
