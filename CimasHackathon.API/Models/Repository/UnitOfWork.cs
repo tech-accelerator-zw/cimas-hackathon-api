@@ -11,6 +11,7 @@ namespace CimasHackathon.API.Models.Repository
         public IDiseaseRepository Disease { get; private set; }
         public IDoctorRepository Doctor { get; private set; }
         public IPrescriptionRepository Prescription { get; private set; }
+        public IPharmacyRepository Pharmacy { get; private set; }
 
         public UnitOfWork(AppDbContext context)
         {
@@ -19,6 +20,7 @@ namespace CimasHackathon.API.Models.Repository
             Disease = new DiseaseRepository(context);
             Doctor = new DoctorRepository(context);
             Prescription = new PrescriptionRepository(context);
+            Pharmacy = new PharmacyRepository(context);
             _context = context;
         }
 
