@@ -11,6 +11,20 @@ namespace CimasHackathon.API.Models.Repository
         {
         }
 
+        public async new Task<Result<Medication>> FindAsync(int id)
+        {
+            {
+                var result = await _dbSet
+                    .Where(x => x.Id == id)
+                    .Include(x => x.Disease)
+                    .FirstOrDefaultAsync();
+                
+                if (result == null) return new Result<Medication>(false, "Medication not found");
+
+                return new Result<Medication>(result);
+            }
+        }
+        
         public async new Task<Result<IEnumerable<Medication>>> GetAllAsync()
         {
             var result = await _dbSet
