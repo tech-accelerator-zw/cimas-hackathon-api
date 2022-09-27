@@ -32,7 +32,8 @@ namespace CimasHackathon.API.Controllers
             {
                 Location = request.Location,
                 Name = request.Name,
-                Surname = request.Surname
+                Surname = request.Surname,
+                Email = request.Email
             });
 
             if (!result.Success) return BadRequest(result);
