@@ -34,5 +34,14 @@ namespace CimasHackathon.API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Get() => Ok(await _unitOfWork.Pharmacy.GetAllAsync());
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var result = await _unitOfWork.Pharmacy.FindAsync(id);
+            if (!result.Success) return NotFound(result);
+
+            return Ok(result);
+        }
     }
 }
