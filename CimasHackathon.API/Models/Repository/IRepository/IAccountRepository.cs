@@ -13,6 +13,7 @@ namespace CimasHackathon.API.Models.Repository.IRepository
         Task<Result<Patient>> PatientLoginAsync(PatientLoginRequest login);
         Task<Result<Doctor>> DoctorLoginAsync(DoctorLoginRequest login);
         Task<Result<Pharmacy>> PharmacyLoginAsync(PharmacyLoginRequest login);
+        Task<Result<Admin>> AdminLoginAsync(AdminLoginRequest login);
         Task<Result<string>> PatientOtpAsync(string phoneNumber);
         //Task<Result<Account>> ChangePasswordAsync(ChangePasswordRequest changePassword);
         //Task<Result<string>> GetResetPasswordCodeAsync(string email);

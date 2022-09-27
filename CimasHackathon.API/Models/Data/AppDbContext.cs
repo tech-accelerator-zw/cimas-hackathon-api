@@ -10,6 +10,7 @@ namespace CimasHackathon.API.Models.Data
         }
         
         public DbSet<Account>? Accounts { get; set; }
+        public DbSet<Admin>? Admins { get; set; }
         public DbSet<GeneratedCode>? GeneratedCodes { get; set; }
         public DbSet<Patient>? Patients { get; set; }
         public DbSet<Medication>? Medications { get; set; }
