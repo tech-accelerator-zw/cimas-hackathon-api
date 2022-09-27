@@ -17,11 +17,21 @@ namespace CimasHackathon.API.Controllers
             _accountRepository = accountRepository;
         }
 
-
         [HttpPost("login/patient")]
         public async Task<IActionResult> Login(PatientLoginRequest request)
         {
             var result = await _accountRepository.PatientLoginAsync(request);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPost("login/doctor")]
+        public async Task<IActionResult> Login(DoctorLoginRequest request)
+        {
+            var result = await _accountRepository.DoctorLoginAsync(request);
 
             if (!result.Success)
                 return BadRequest(result);
