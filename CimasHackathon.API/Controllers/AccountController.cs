@@ -49,6 +49,16 @@ namespace CimasHackathon.API.Controllers
 
             return Ok(result);
         }
+        [HttpPost("login/admin")]
+        public async Task<IActionResult> Login(AdminLoginRequest request)
+        {
+            var result = await _accountRepository.AdminLoginAsync(request);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
 
         [HttpPost("otp")]
         public async Task<IActionResult> Otp(string cimasNumber)
