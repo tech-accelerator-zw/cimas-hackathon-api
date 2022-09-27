@@ -39,6 +39,17 @@ namespace CimasHackathon.API.Controllers
             return Ok(result);
         }
 
+        [HttpPost("login/pharmacy")]
+        public async Task<IActionResult> Login(PharmacyLoginRequest request)
+        {
+            var result = await _accountRepository.PharmacyLoginAsync(request);
+
+            if (!result.Success)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpPost("otp")]
         public async Task<IActionResult> Otp(string cimasNumber)
         {
