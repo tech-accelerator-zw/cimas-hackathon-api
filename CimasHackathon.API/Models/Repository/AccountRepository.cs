@@ -292,5 +292,22 @@ namespace CimasHackathon.API.Models.Repository
 
             return new Result<Doctor>(false, "Invalid email or password provided.");
         }
+
+        public async Task<Result<Pharmacy>> PharmacyLoginAsync(PharmacyLoginRequest login)
+        {
+            var pharmacy = await _context.Pharmacies!.Where(x => x.Email == login.Email).FirstOrDefaultAsync();
+            if (pharmacy != null && login.Password == "qwerty123")
+            {
+                pharmacy.Token = await _jwtService.GenerateToken(new Account
+                {
+                    Id = pharmacy.Id,
+                    Email = pharmacy.Email
+                });
+
+                return new Result<Pharmacy>(pharmacy);
+            }
+
+            return new Result<Pharmacy>(false, "Invalid email or password provided.");
+        }
     }
 }
