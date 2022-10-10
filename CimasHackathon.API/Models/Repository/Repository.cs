@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using CimasHackathon.API.Models.Data;
+﻿using CimasHackathon.API.Models.Data;
 using CimasHackathon.API.Models.Local;
 using CimasHackathon.API.Models.Repository.IRepository;
 using CimasHackathon.Utility;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CimasHackathon.API.Models.Repository
@@ -53,7 +52,7 @@ namespace CimasHackathon.API.Models.Repository
         public async Task<Result<T>> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter)
         {
             var entity = await _dbSet.Where(filter).FirstOrDefaultAsync();
-            
+
             return new Result<T>(entity);
         }
 
@@ -65,4 +64,4 @@ namespace CimasHackathon.API.Models.Repository
             return new Result<T>(entity);
         }
     }
-} 
+}
