@@ -1,9 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CimasHackathon.API.Enums;
-using CimasHackathon.API.Models.Data;
+﻿using CimasHackathon.API.Models.Data;
 using CimasHackathon.API.Models.Local;
 using CimasHackathon.API.Models.Repository.IRepository;
 using CimasHackathon.API.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace CimasHackathon.API.Models.Repository
 {
@@ -237,7 +236,7 @@ namespace CimasHackathon.API.Models.Repository
                 .Where(tsuro => tsuro.Account!.Email == request.Email)
                 .Include(x => x.Account)
                 .FirstOrDefaultAsync();
-            
+
             if (patient == null) return new Result<Patient>(false, "User account not found!");
 
             var code = await _context.GeneratedCodes!.Where(x => x.UserEmail == request.Email && x.Code == request.Otp).FirstOrDefaultAsync();
