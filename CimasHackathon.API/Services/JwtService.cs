@@ -1,8 +1,8 @@
-﻿using System.Security.Claims;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
+﻿using CimasHackathon.API.Models.Data;
 using Microsoft.IdentityModel.Tokens;
-using CimasHackathon.API.Models.Data;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace CimasHackathon.API.Services
 {
@@ -26,14 +26,14 @@ namespace CimasHackathon.API.Services
                     new Claim("UserId", account.Id.ToString()),
                     new Claim(ClaimTypes.Email, account.Email!)
                 }),
-                
+
                 Expires = DateTime.Now.AddHours(8),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             account.Token = tokenHandler.WriteToken(token);
-         
+
             return Task.FromResult(account.Token);
         }
     }
